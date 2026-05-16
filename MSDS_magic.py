@@ -53,6 +53,8 @@ if "message_count" not in st.session_state:
     st.session_state.message_count = 0
 if "pending_query" not in st.session_state:
     st.session_state.pending_query = None
+if "input_key" not in st.session_state:          # ← NEW: for input-clear trick
+    st.session_state.input_key = 0
 
 # ── CSS ───────────────────────────────────────────────────────────────────────
 st.markdown("""
@@ -637,7 +639,8 @@ with st.sidebar:
     st.caption(f"💬 {st.session_state.message_count} messages this session")
     if st.button("🗑️ New Chat"):
         for key in ["chat_history", "db1", "db2", "chem1_name", "chem2_name",
-                    "chem1_loaded", "chem2_loaded", "message_count", "pending_query"]:
+                    "chem1_loaded", "chem2_loaded", "message_count", "pending_query",
+                    "input_key", "_last_input"]:
             if key in st.session_state:
                 del st.session_state[key]
         st.rerun()
@@ -695,8 +698,10 @@ if st.session_state.chem1_loaded or st.session_state.chem2_loaded:
 col_input, col_send = st.columns([6, 1])
 with col_input:
     user_input = st.text_input(
-        "", placeholder="Ask anything about the loaded chemical(s)…",
-        label_visibility="collapsed", key="user_input"
+        "",
+        placeholder="Ask anything about the loaded chemical(s)…",
+        label_visibility="collapsed",
+        key=f"user_input_{st.session_state.input_key}"   # ← dynamic key clears field on increment
     )
 with col_send:
     send_btn = st.button("Send ↑", use_container_width=True)
@@ -720,5 +725,6 @@ if send_btn or (user_input and st.session_state.get("_last_input") != user_input
 
         with st.spinner("Thinking…"):
             get_answer(user_input, qtype)
-        st.session_state.user_input = ""
+
+        st.session_state.input_key += 1   # ← increment key → widget re-renders blank
         st.rerun()
