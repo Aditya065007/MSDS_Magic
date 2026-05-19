@@ -499,7 +499,7 @@ PRESETS = {
 embeddings = load_embeddings()
 
 with st.sidebar:
-    st.title("⚗️ MSDS Chatbot")
+    st.title(" MSDS Magic")
     st.caption("Chemical Intelligence Platform")
     st.markdown("---")
 
