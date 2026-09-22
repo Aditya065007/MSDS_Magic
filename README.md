@@ -1,6 +1,6 @@
 # MSDS Chemical Intelligence Chatbot
 
-**Live App:** [Add your Streamlit link here]
+**Live App:** https://msdsmagic-djkqwnf9mwipoctmnajusc.streamlit.app/
 
 A Streamlit app for querying and comparing chemical safety data sheets (MSDS/SDS) through a chatbot that is deliberately designed to refuse to guess. Safety data sheets are the kind of document where a wrong or made-up number is actually dangerous, so this project's core design principle is strict grounding: every answer must trace back to the actual document text, and if the information isn't there, the app says so instead of filling the gap.
 
@@ -36,8 +36,5 @@ A Streamlit app for querying and comparing chemical safety data sheets (MSDS/SDS
 5. **Retrieving and answering.** The top 6 most relevant chunks are pulled from the appropriate index (or both, for a comparison) and inserted into a prompt template that lays out the strict rules: quote numbers exactly, cite section and page for every fact, and say "Not specified in document" for anything missing. This prompt goes to the Groq-hosted model, and the response comes back already following that structure.
 6. **Display and export.** Hazard-related keywords in the response are highlighted by severity, and the full conversation (or just the comparison portions, or just the latest summary) can be exported as a formatted PDF or Word document.
 
-
-streamlit run app.py
-```
 
 Load one or two MSDS PDFs from the sidebar, then use the preset quick-query buttons or type a free-form question. Use "Generate Full Summary" for a structured walkthrough of all 16 GHS sections.
