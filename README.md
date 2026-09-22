@@ -36,22 +36,7 @@ A Streamlit app for querying and comparing chemical safety data sheets (MSDS/SDS
 5. **Retrieving and answering.** The top 6 most relevant chunks are pulled from the appropriate index (or both, for a comparison) and inserted into a prompt template that lays out the strict rules: quote numbers exactly, cite section and page for every fact, and say "Not specified in document" for anything missing. This prompt goes to the Groq-hosted model, and the response comes back already following that structure.
 6. **Display and export.** Hazard-related keywords in the response are highlighted by severity, and the full conversation (or just the comparison portions, or just the latest summary) can be exported as a formatted PDF or Word document.
 
-## Setup
 
-```bash
-pip install -r requirements.txt
-```
-
-Add your Groq API key to Streamlit secrets:
-
-```toml
-# .streamlit/secrets.toml
-GROQ_API_KEY = "your-key-here"
-```
-
-## Usage
-
-```bash
 streamlit run app.py
 ```
 
